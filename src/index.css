@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+:root {
+  /* Design Tokens for Light Mode */
+  --border-primary: rgba(24, 24, 27, 0.08); /* subtle zinc-800-like transparent border in light mode */
+  --border-secondary: rgba(24, 24, 27, 0.04);
+  --surface: #ffffff;
+  --surface-hover: #fafafa;
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --background-primary: #fafafa;
+  --background-secondary: #ffffff;
+}
+
+.dark {
+  /* Design Tokens for Premium Dark Mode (Apple/Linear style) */
+  --border-primary: rgba(255, 255, 255, 0.08); /* soft elegant luxury border */
+  --border-secondary: rgba(255, 255, 255, 0.04); /* ultra-soft subtle border */
+  --surface: #0b0b0f;
+  --surface-hover: #121216;
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
+  --background-primary: #050507;
+  --background-secondary: #0b0b0f;
+}
+
+@theme {
+  /* Expose design tokens as custom Tailwind colors */
+  --color-border-primary: var(--border-primary);
+  --color-border-secondary: var(--border-secondary);
+  --color-surface-premium: var(--surface);
+  --color-surface-premium-hover: var(--surface-hover);
+  --color-background-primary: var(--background-primary);
+  --color-background-secondary: var(--background-secondary);
+  --shadow-premium: var(--card-shadow);
+
+  /* Map standard zinc colors used for dark borders to our design tokens for automatic retrofitting */
+  --color-zinc-800: var(--border-primary);
+  --color-zinc-850: var(--border-secondary);
+}
+
+@layer utilities {
+  .border-premium {
+    border-color: var(--border-primary) !important;
+  }
+  .border-premium-subtle {
+    border-color: var(--border-secondary) !important;
+  }
+  .bg-surface-premium {
+    background-color: var(--surface) !important;
+  }
+  .bg-surface-premium-hover:hover {
+    background-color: var(--surface-hover) !important;
+  }
+  .shadow-premium {
+    box-shadow: var(--card-shadow) !important;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+}
+
+/* Custom scrollbars for sidebars and codes */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.2);
+  border-radius: 9999px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 120, 120, 0.4);
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

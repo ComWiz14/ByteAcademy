@@ -1,0 +1,8 @@
+{
+  "name": "ByteAcademy",
+  "description": "Learn Java Through Understanding, Not Memorization. A modern handbook that guides complete beginners from their first introduction to Java to advanced concepts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
