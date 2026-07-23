@@ -1,5 +1,7 @@
 import { GoogleGenAI } from '@google/genai';
-import { KNOWLEDGE_CONTEXT } from './knowledgeContext';
+import { getKnowledgeMarkdownContext } from '../services/byteAcademyKnowledge';
+
+const KNOWLEDGE_CONTEXT = getKnowledgeMarkdownContext();
 
 const BASE_SYSTEM_INSTRUCTION = `You are "ByteAcademy AI Assistant", an intelligent programming tutor integrated into the ByteAcademy online platform.
 
@@ -111,7 +113,7 @@ export default async function handler(req: any, res: any) {
   } catch (error: any) {
     console.error('Error in /api/chat serverless handler:', error);
     return res.status(500).json({
-      error: error.message || 'Something went wrong while contacting the AI Assistant. Please try again shortly.'
+      error: 'ByteAcademy AI is temporarily unavailable. Please try again shortly.'
     });
   }
 }
