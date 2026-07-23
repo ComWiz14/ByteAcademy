@@ -1,5 +1,5 @@
 import { GoogleGenAI } from '@google/genai';
-import { getKnowledgeMarkdownContext } from '../src/services/byteAcademyKnowledge';
+import { KNOWLEDGE_CONTEXT } from './knowledgeContext';
 
 const BASE_SYSTEM_INSTRUCTION = `You are "ByteAcademy AI Assistant", an intelligent programming tutor integrated into the ByteAcademy online platform.
 
@@ -32,7 +32,7 @@ CRITICAL COMMUNICATION RULES (NO INTERNAL ROUTES OR FILE PATHS):
 Below is the structured knowledge base about ByteAcademy's learning structure, available modules, tutor information, and mission. Use this data to accurately recommend lessons or answer questions about the platform:`;
 
 export function getFullSystemInstruction(context?: string): string {
-  let instruction = `${BASE_SYSTEM_INSTRUCTION}\n\n${getKnowledgeMarkdownContext()}`;
+  let instruction = `${BASE_SYSTEM_INSTRUCTION}\n\n${KNOWLEDGE_CONTEXT}`;
   if (context) {
     instruction += `\n\n=========================================\nCURRENT LIVE CONTEXT:\n=========================================\nThe student is currently active on: ${context}\nUse this specific context to formulate your response, connect concepts directly to what is on their screen, or help them solve issues related to this active area.`;
   }
@@ -71,7 +71,14 @@ export default async function handler(req: any, res: any) {
       return res.status(400).json({ error: 'Your message is too long. Please shorten it and try again.' });
     }
 
-    const ai = new GoogleGenAI({ apiKey });
+    const ai = new GoogleGenAI({
+      apiKey,
+      httpOptions: {
+        headers: {
+          'User-Agent': 'aistudio-build',
+        }
+      }
+    });
 
     // Map conversation history to Gemini contents format (safely sliced to latest 10 messages)
     const contents = Array.isArray(history)
