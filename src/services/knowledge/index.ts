@@ -78,14 +78,15 @@ ${formattedPages}
 =========================================
 - **Name**: ${creatorInfo.name}
 - **Role**: ${creatorInfo.role}
-- **Education**: ${creatorInfo.education.program} at ${creatorInfo.education.institution} (${creatorInfo.education.campus} Campus, ${creatorInfo.education.location})
-- **Residence**: ${creatorInfo.currentResidence}
+- **Education**: ${creatorInfo.education.program} at ${creatorInfo.education.institution}
+- **Programming Languages**: ${creatorInfo.programmingLanguages.join(", ")}
 - **Interests**: ${creatorInfo.interests.join(", ")}
 - **Bio**: ${creatorInfo.bio}
-- **Creator's Philosophy**: "${creatorInfo.personalMessage}"
+- **Teaching Philosophy**: ${creatorInfo.teachingPhilosophy.description}
+- **Creator's Philosophy / Message**: "${creatorInfo.personalMessage}"
 
 =========================================
-5. CURRICULUM KNOWLEDGE (13 MODULES):
+5. CURRICULUM KNOWLEDGE (14 MODULES):
 =========================================
 ${formattedCurriculum}
 

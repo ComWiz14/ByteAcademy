@@ -31,6 +31,7 @@ import JavaLogo from '../components/JavaLogo';
 import ExpandableMobileCards from '../components/ExpandableMobileCards';
 import { ROADMAP_STEPS } from '../constants/javaData';
 import { CONTACT } from '../constants/contact';
+import meImg from '../assets/images/Me.png';
 
 const HERO_SLIDES = [
   {
@@ -749,6 +750,60 @@ public class LoopDemonstration {
 
       {/* 8. Private Tutoring Section (CTA) */}
       <TutoringCTA variant="homepage" />
+
+      {/* Meet the Creator Section */}
+      <section className="py-12 border-b border-zinc-800 bg-zinc-950/40">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-zinc-900/40 border border-zinc-800 rounded-2xl p-5 sm:p-6 shadow-xl relative overflow-hidden">
+            {/* Background Accent Gradients */}
+            <div className="absolute -top-40 -left-40 w-80 h-80 bg-[#FF0800]/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-rose-500/5 rounded-full blur-3xl pointer-events-none" />
+            
+            <div className="flex flex-row items-start gap-4 sm:gap-6 relative z-10">
+              {/* Profile Photo - Compact & Left Aligned */}
+              <div className="flex-shrink-0 flex flex-col items-center gap-2">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="relative w-[72px] h-[72px] sm:w-[84px] sm:h-[84px] rounded-full bg-gradient-to-tr from-[#FF0800]/20 to-rose-500/20 p-0.5 flex items-center justify-center shadow-md"
+                >
+                  <div className="w-full h-full rounded-full bg-zinc-950 border border-zinc-800 flex items-center justify-center overflow-hidden">
+                    <img
+                      src={meImg}
+                      alt="Chimango Mughogho - Creator of ByteAcademy"
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  </div>
+                </motion.div>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-[#FF0800]/10 text-[#FF0800] text-[8px] sm:text-[9px] font-black uppercase tracking-wider whitespace-nowrap">
+                  Creator
+                </span>
+              </div>
+
+              {/* Text Introduction & Button */}
+              <div className="flex-grow flex flex-col min-w-0">
+                <h3 className="text-lg sm:text-xl font-black text-white leading-tight mb-2">
+                  Hi, I'm Chimango 👋
+                </h3>
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-medium">
+                  I'm a Computer Science student at the University of Malawi and the creator of ByteAcademy. I enjoy building software, teaching programming, and exploring cybersecurity. I created ByteAcademy to help beginners learn Java through simple explanations, practical examples, and structured learning.
+                </p>
+                <div className="mt-3 sm:mt-4 flex justify-end">
+                  <Link
+                    to="/about#get-to-know-me"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#FF0800] hover:bg-rose-700 text-white font-bold text-[10px] sm:text-xs tracking-wider uppercase rounded-xl shadow-md transition-all active:scale-95 cursor-pointer whitespace-nowrap"
+                  >
+                    <span>Read My Story</span>
+                    <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 9. About ByteAcademy (Brief summary) */}
       <section className="py-20 bg-zinc-950/20">

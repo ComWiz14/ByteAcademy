@@ -1,8 +1,24 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { Terminal, Award, Lightbulb, Users, ShieldCheck, Heart, GraduationCap, Laptop, BookOpen, Rocket } from 'lucide-react';
+import { Terminal, Award, Lightbulb, Users, ShieldCheck, Heart, GraduationCap, Laptop, BookOpen, Rocket, Code, Target } from 'lucide-react';
 import meImg from '../assets/images/Me.png';
 
 export default function About() {
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash === '#get-to-know-me') {
+      const element = document.getElementById('get-to-know-me');
+      if (element) {
+        const timer = setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [hash]);
+
   const values = [
     {
       title: 'Analogy-Driven Learning',
@@ -162,15 +178,21 @@ if (problemExists) {
                 transition={{ duration: 0.5 }}
                 className="flex flex-col gap-4"
               >
-                <h4 className="text-xl sm:text-2xl font-black text-white">
+                <h4 className="text-xl sm:text-2xl font-black text-white scroll-mt-24" id="get-to-know-me">
                   Hi, I'm Chimango Mughogho.
                 </h4>
                 <div className="space-y-4 text-sm text-zinc-400 leading-relaxed">
                   <p>
-                    I am currently studying for a <span className="text-white font-semibold">Bachelor of Education in Computer Science</span>. Combining my background in pedagogical theory with my technical training, I am passionate about software development, building useful technology, and exploring cybersecurity.
+                    I am currently pursuing a <span className="text-white font-semibold">Bachelor of Education in Computer Science at the University of Malawi</span>.
                   </p>
                   <p>
-                    I enjoy breaking down difficult programming concepts into simple explanations that beginners can understand. ByteAcademy was created to provide a structured and beginner-friendly way for anyone interested in learning Java.
+                    Although my degree combines education and computer science, my long-term goal is to build secure software systems and pursue a career in <span className="text-white font-semibold">Software Engineering and Cybersecurity</span>.
+                  </p>
+                  <p>
+                    I enjoy teaching programming because simplifying difficult concepts helps both my students and myself grow as developers.
+                  </p>
+                  <p>
+                    <span className="text-[#FF0800] font-semibold">ByteAcademy</span> was created to make learning Java easier through structured lessons, practical examples, worked code examples, projects, exercises, and AI-assisted learning.
                   </p>
                 </div>
               </motion.div>
@@ -189,10 +211,10 @@ if (problemExists) {
                 </h4>
                 <div className="space-y-4 text-sm text-zinc-400 leading-relaxed">
                   <p>
-                    When I started learning programming, I also experienced moments where concepts felt confusing and difficult to understand. Many programming topics only became clearer when they were explained step by step with practical examples.
+                    When I first started my programming journey, I found it incredibly challenging. Many of the online concepts were explained too quickly or completely lacked real-world, practical examples, leaving me overwhelmed and struggling to connect the dots.
                   </p>
                   <p>
-                    This experience inspired me to create ByteAcademy — a platform that explains Java concepts in a simple, structured way so that beginners can avoid feeling overwhelmed and can build confidence as they learn.
+                    This firsthand struggle is what inspired me to create ByteAcademy. I wanted to build a platform where beginners can learn Java through simple explanations, clear step-by-step guidance, and real practical examples, so they can avoid feeling overwhelmed and build true confidence as they learn.
                   </p>
                 </div>
               </motion.div>
@@ -213,7 +235,7 @@ if (problemExists) {
                 </p>
               </motion.div>
 
-              {/* Personal Highlights (Grid) */}
+              {/* Personal Highlights (Grid with 6 cards) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Card 1: Education */}
                 <motion.div
@@ -231,29 +253,36 @@ if (problemExists) {
                     <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
                       Bachelor of Education in Computer Science
                     </p>
-                  </div>
-                </motion.div>
-
-                {/* Card 2: Interests */}
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.15 }}
-                  className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-sm flex gap-4 items-start"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-[#FF0800]/10 flex items-center justify-center shrink-0">
-                    <Laptop className="w-5 h-5 text-[#FF0800]" />
-                  </div>
-                  <div>
-                    <h5 className="font-bold text-white text-sm">Interests</h5>
-                    <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                      Software Engineering and Cybersecurity
+                    <p className="text-[11px] text-zinc-500 mt-0.5">
+                      University of Malawi
                     </p>
                   </div>
                 </motion.div>
 
-                {/* Card 3: Teaching Style */}
+                {/* Card 2: Programming Languages (NEW) */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.18 }}
+                  className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-sm flex gap-4 items-start"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-[#FF0800]/10 flex items-center justify-center shrink-0">
+                    <Code className="w-5 h-5 text-[#FF0800]" />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-white text-sm">Programming Languages</h5>
+                    <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                      Languages I am most comfortable working with:
+                    </p>
+                    <div className="flex flex-wrap gap-1.5 mt-2">
+                      <span className="px-2 py-0.5 text-[10px] font-bold bg-zinc-950 rounded border border-zinc-800 text-[#FF0800]">Java</span>
+                      <span className="px-2 py-0.5 text-[10px] font-bold bg-zinc-950 rounded border border-zinc-800 text-rose-400">C++</span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Card 3: Interests */}
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -262,17 +291,41 @@ if (problemExists) {
                   className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-sm flex gap-4 items-start"
                 >
                   <div className="w-10 h-10 rounded-xl bg-[#FF0800]/10 flex items-center justify-center shrink-0">
+                    <Laptop className="w-5 h-5 text-[#FF0800]" />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-white text-sm">Interests</h5>
+                    <ul className="text-xs text-zinc-400 mt-1 leading-relaxed list-disc list-inside space-y-0.5">
+                      <li>Software Engineering</li>
+                      <li>Cybersecurity</li>
+                      <li>Java Development</li>
+                      <li>C++ Programming</li>
+                      <li>Educational Technology</li>
+                      <li>Problem Solving</li>
+                    </ul>
+                  </div>
+                </motion.div>
+
+                {/* Card 4: Teaching Philosophy (Renamed from Teaching Style) */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.22 }}
+                  className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-sm flex gap-4 items-start"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-[#FF0800]/10 flex items-center justify-center shrink-0">
                     <BookOpen className="w-5 h-5 text-[#FF0800]" />
                   </div>
                   <div>
-                    <h5 className="font-bold text-white text-sm">Teaching Style</h5>
+                    <h5 className="font-bold text-white text-sm">Teaching Philosophy</h5>
                     <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                      Simple explanations, practical examples, and structured learning
+                      Simple explanations. Practical examples. Structured learning. Helping beginners build confidence one concept at a time.
                     </p>
                   </div>
                 </motion.div>
 
-                {/* Card 4: Mission */}
+                {/* Card 5: Mission */}
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -286,7 +339,26 @@ if (problemExists) {
                   <div>
                     <h5 className="font-bold text-white text-sm">Mission</h5>
                     <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
-                      Helping beginners build a strong foundation in Java programming
+                      Helping beginners build a strong foundation in Java while making programming easier, more practical, and more enjoyable to learn.
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Card 6: Vision (NEW) */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.28 }}
+                  className="p-5 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-sm flex gap-4 items-start"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-[#FF0800]/10 flex items-center justify-center shrink-0">
+                    <Target className="w-5 h-5 text-[#FF0800]" />
+                  </div>
+                  <div>
+                    <h5 className="font-bold text-white text-sm">Vision</h5>
+                    <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                      My vision for ByteAcademy is to become one of the most trusted free platforms for learning Java, helping students build real programming skills through structured lessons, worked examples, practical projects, and AI-assisted learning.
                     </p>
                   </div>
                 </motion.div>
@@ -302,7 +374,7 @@ if (problemExists) {
               >
                 <p className="text-sm font-semibold text-[#FF0800] mb-1">A Quick Note to Learners:</p>
                 <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                  Whether you are completely new to programming or trying to strengthen your Java skills, ByteAcademy is designed to guide you step by step. Stay curious, practice consistently, and enjoy the journey of learning programming.
+                  Whether you are writing your very first line of code or seeking to master the intricacies of Java's memory allocation, please remember that every expert was once a beginner. ByteAcademy is crafted to walk beside you, breaking down every complex barrier. Stay incredibly curious, practice daily, embrace your compiler errors as learning moments, and above all, enjoy the wonderful journey of coding!
                 </p>
               </motion.div>
 

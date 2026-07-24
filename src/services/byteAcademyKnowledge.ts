@@ -151,7 +151,7 @@ export function getKnowledgeMarkdownContext(): string {
     if (tool.recommendation) context += `    - Recommendation: ${tool.recommendation}\n`;
   });
 
-  context += `\n6. COMPREHENSIVE 13-MODULE JAVA CURRICULUM:\n`;
+  context += `\n6. COMPREHENSIVE 14-MODULE JAVA CURRICULUM:\n`;
   curriculumInfo.forEach(mod => {
     context += `- Module #${mod.moduleNumber}: ${mod.title} (${mod.difficulty})\n`;
     context += `  * Summary: ${mod.description}\n`;
