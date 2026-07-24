@@ -596,6 +596,293 @@ String city = scanner.nextLine(); // ✓ Safely prompts and reads correctly!`
     ]
   },
 
+  'command-line-arguments': {
+    slug: 'command-line-arguments',
+    title: 'Command-Line Arguments',
+    moduleSlug: 'java-fundamentals',
+    moduleName: 'Java Fundamentals',
+    estimatedTime: '12 mins',
+    difficulty: 'Beginner',
+    introduction: `In traditional console applications, programs often need parameters or options configured before they begin running. While the Scanner class lets you prompt users for inputs while the program is actively running, **Command-Line Arguments** allow you to feed data directly into your program at the exact moment of its launch from the terminal.
+
+These arguments are supplied as a list of words or values typed immediately after the program's execution command. Understanding how to handle command-line arguments is essential for writing professional terminal tools, scripts, and server-side automation routines.`,
+    whyThisTopicMatters: {
+      whyItExists: 'When running automated server tasks or system scripts, there is no physical human sitting at a keyboard to answer interactive Scanner prompts. Programs must be able to accept initialization parameters—like file names, server ports, or operation modes—non-interactively at launch.',
+      problemSolved: 'Command-line arguments solve this by accepting launch settings instantly. This allows Java applications to be triggered by other programs, automated cron jobs, or container orchestrators without getting stuck waiting for manual terminal inputs.'
+    },
+    mainExplanation: [
+      {
+        type: 'paragraph',
+        text: 'To understand command-line arguments, we must dissect the very first line of code we wrote in our Java journey: the standard **main method declaration**.'
+      },
+      {
+        type: 'info_card',
+        title: 'Deconstructing public static void main(String[] args)'
+      },
+      {
+        type: 'paragraph',
+        text: 'Every standard standalone Java application requires an entry point. This entry point is defined with a highly specific signature: `public static void main(String[] args)`. Let\'s break down what each of these keywords actually does:'
+      },
+      {
+        type: 'bullet_list',
+        title: 'Main Method Keyword Breakdown',
+        items: [
+          '**public**: The access modifier that makes this method accessible to the Java Virtual Machine (JVM) from outside the package.',
+          '**static**: Allows the JVM to invoke the main method without having to instantiate an object of the surrounding class first.',
+          '**void**: Indicates that the main method does not return any resulting value back to the JVM when execution finishes.',
+          '**main**: The exact, case-sensitive name of the starting method that the JVM searches for to begin program execution.',
+          '**String[] args**: An array of `String` objects (short for "arguments") that acts as the dedicated inbox where Java receives any inputs passed at program launch.'
+        ]
+      },
+      {
+        type: 'callout',
+        calloutType: 'tip',
+        text: 'Although the variable name is traditionally written as `args`, this is simply an identifier. You could name it `String[] parameters` or `String[] input`, but using `args` is an industry standard that guarantees your code is instantly recognizable.'
+      },
+      {
+        type: 'info_card',
+        title: 'Accessing and Indexing Arguments'
+      },
+      {
+        type: 'paragraph',
+        text: 'Because `args` is a standard Java **Array**, it stores passed values in a sequential, zero-indexed order. This means that the first parameter typed in the console is stored at index `0`, the second at index `1`, and so on:'
+      },
+      {
+        type: 'bullet_list',
+        title: 'How Indexes Map to Console Arguments',
+        items: [
+          '`args[0]` retrieves the first argument passed to your program.',
+          '`args[1]` retrieves the second argument passed to your program.',
+          '`args[2]` retrieves the third argument passed to your program.'
+        ]
+      },
+      {
+        type: 'callout',
+        calloutType: 'important',
+        text: 'Unlike some languages like C or C++, where the first argument (`argv[0]`) is the name of the executable program itself, in Java, the first element `args[0]` is strictly the **first user-provided argument**.'
+      },
+      {
+        type: 'info_card',
+        title: 'Checking the Argument Count with args.length'
+      },
+      {
+        type: 'paragraph',
+        text: 'Before attempting to read from the `args` array, you must always verify how many arguments were actually passed. If you attempt to access an index that does not exist (for example, reading `args[0]` when no arguments were provided), Java will immediately crash your program with an **ArrayIndexOutOfBoundsException**.'
+      },
+      {
+        type: 'paragraph',
+        text: 'To prevent this, we check the size of the array using `args.length`. The `length` property returns an integer indicating how many items are stored in the array. We can use standard conditional blocks to validate this before accessing elements:'
+      },
+      {
+        type: 'info_card',
+        title: 'Converting Arguments to Numbers'
+      },
+      {
+        type: 'paragraph',
+        text: 'Because the `args` array is declared strictly as a `String[]`, **every single argument** passed into your program is treated as text, even if you type numbers (like `45` or `3.14`).'
+      },
+      {
+        type: 'paragraph',
+        text: 'To perform arithmetic operations, you must explicitly convert these text values into numerical data types. Java provides convenient helper methods in its wrapper classes for this exact purpose:'
+      },
+      {
+        type: 'terminology_card',
+        terminology: {
+          keyword: 'Integer.parseInt()',
+          definition: 'A static utility method that parses a String and returns its primitive int equivalent.',
+          explanation: 'Example: `Integer.parseInt("42")` returns the integer value `42`.'
+        }
+      },
+      {
+        type: 'terminology_card',
+        terminology: {
+          keyword: 'Double.parseDouble()',
+          definition: 'A static utility method that parses a String and returns its primitive double equivalent.',
+          explanation: 'Example: `Double.parseDouble("19.99")` returns the double value `19.99`.'
+        }
+      },
+      {
+        type: 'info_card',
+        title: 'Handling Invalid Input and NumberFormatException'
+      },
+      {
+        type: 'paragraph',
+        text: 'If a user passes an argument that cannot be parsed into a number (for example, typing `abc` when your program expects an integer), calling `Integer.parseInt()` or `Double.parseDouble()` will throw a **NumberFormatException** and crash your program.'
+      },
+      {
+        type: 'paragraph',
+        text: 'To build professional, bulletproof software, you should wrap numeric conversions inside a **try-catch** block to capture this potential exception and provide friendly error messages.'
+      },
+      {
+        type: 'bullet_list',
+        title: 'Command-Line Arguments Best Practices',
+        items: [
+          '**Always Check args.length**: Never assume the user provided the correct number of arguments. Validate the array length first.',
+          '**Provide Usage Instructions**: If the argument check fails, print a helpful "Usage" message explaining the expected command format (e.g., `Usage: java MyClass <port> <host>`).',
+          '**Use Safe Parsing**: Wrap all numeric parsing operations (`parseInt`, `parseDouble`) in a try-catch block to prevent crashes from typos.',
+          '**Validate Input Ranges**: After parsing numeric inputs, check that they fall within logical bounds (e.g., ports should be between 1 and 65535).'
+        ]
+      }
+    ],
+    codeExamples: [
+      {
+        title: 'Basic Argument Retrieval and Output',
+        language: 'java',
+        code: `public class Greeter {
+    public static void main(String[] args) {
+        // Checking if at least one argument was passed
+        if (args.length < 1) {
+            System.out.println("Usage: java Greeter <YourName>");
+            return; // Stops execution early if no name was passed
+        }
+        
+        // Retrieving the first argument
+        String name = args[0];
+        System.out.println("Hello, " + name + "! Welcome to ByteAcademy.");
+    }
+}`,
+        explanation: 'We compile with "javac Greeter.java" and execute with "java Greeter Alice". Since args.length is 1, the check passes. "Alice" is retrieved from args[0] and printed.'
+      },
+      {
+        title: 'Parsing and Validating Multiple Numeric Arguments',
+        language: 'java',
+        code: `public class Multiplier {
+    public static void main(String[] args) {
+        // 1. Enforce that exactly 2 arguments are required
+        if (args.length != 2) {
+            System.out.println("Error: Please provide exactly 2 numbers.");
+            System.out.println("Usage: java Multiplier <num1> <num2>");
+            return;
+        }
+
+        // 2. Perform safe parsing using a try-catch block
+        try {
+            double first = Double.parseDouble(args[0]);
+            double second = Double.parseDouble(args[1]);
+            double result = first * second;
+            
+            System.out.println(first + " x " + second + " = " + result);
+        } catch (NumberFormatException e) {
+            System.out.println("Error: One or both inputs were not valid numbers.");
+        }
+    }
+}`,
+        explanation: 'We require exactly two launch arguments. If the user runs "java Multiplier 4 5", the inputs are parsed successfully into doubles, multiplied, and "4.0 x 5.0 = 20.0" is printed. If they run "java Multiplier 4 abc", the parse fails, throws a NumberFormatException, which is cleanly caught to display an error.'
+      }
+    ],
+    visualLearning: [
+      {
+        type: 'comparison_table',
+        title: 'Interactive Scanner vs Command-Line Arguments',
+        description: 'A comparison of data input methodologies in terminal-driven Java programs.',
+        elements: {
+          headers: ['Feature', 'Scanner Class', 'Command-Line Arguments'],
+          rows: [
+            ['How Data Is Received', 'Prompts the user interactively while the program is running.', 'Parsed directly from the initial terminal command at launch.'],
+            ['Advantages', 'Highly interactive, allows menus and complex multi-step choices.', 'Non-interactive, easy to automate in scripts, faster to execute.'],
+            ['Disadvantages', 'Requires manual typing, blocks execution until input is provided.', 'Limited to simple values, requires parsing and length checks.'],
+            ['Typical Use Cases', 'Games, bank ATMs, database entry consoles, desktop utilities.', 'Command-line utilities, server configuration settings, file processors.']
+          ]
+        }
+      }
+    ],
+    commonMistakes: [
+      {
+        mistake: 'Crashing with ArrayIndexOutOfBoundsException.',
+        whyItHappens: 'This occurs when attempting to read from the args array at an index higher than args.length - 1. For example, reading args[0] when no arguments were supplied.',
+        howToAvoid: 'Always wrap args accesses with a conditional length check (e.g., if (args.length > 0)) to guarantee the elements exist.',
+        codeSnippet: {
+          bad: `public static void main(String[] args) {
+    String firstArg = args[0]; // ❌ Crashes with ArrayIndexOutOfBoundsException if run empty
+    System.out.println(firstArg);
+}`,
+          good: `public static void main(String[] args) {
+    if (args.length > 0) {
+        String firstArg = args[0]; // ✓ Safe from crashes
+        System.out.println(firstArg);
+    } else {
+        System.out.println("No arguments provided.");
+    }
+}`
+        }
+      },
+      {
+        mistake: 'Treating command-line arguments as numbers directly without parsing.',
+        whyItHappens: 'All inputs in the args array are strictly Strings. Attempting to store them directly into int or double variables will trigger immediate compile-time errors.',
+        howToAvoid: 'Always parse numeric string inputs using wrapper utility methods like Integer.parseInt() or Double.parseDouble().',
+        codeSnippet: {
+          bad: `public static void main(String[] args) {
+    int num = args[0]; // ❌ Compile error: incompatible types: String cannot be converted to int
+}`,
+          good: `public static void main(String[] args) {
+    int num = Integer.parseInt(args[0]); // ✓ Successfully parses String to primitive int
+}`
+        }
+      }
+    ],
+    practiceExercise: {
+      title: 'Command-Line Explorer Challenges',
+      tasks: [
+        '**Beginner Challenge**: Create a program "UserWelcome" that takes a user\'s first name and last name as command-line arguments and prints a combined greeting. Verify args.length before accessing to prevent crashes.',
+        '**Intermediate Challenge**: Create a program "LaunchMath" that takes a command (e.g., "add", "sub") and two numbers, parses the numbers safely, and prints the result of the operation. Wrap everything in try-catch to handle invalid numbers.',
+        '**Advanced Challenge**: Create a program "ArgumentStats" that accepts an arbitrary number of integer arguments (e.g. from 1 to 20 integers), parses them all safely, and calculates the average, maximum, and minimum values. Ignore any invalid non-integer arguments while notifying the user.'
+      ]
+    },
+    summary: [
+      'Command-line arguments allow you to pass dynamic values to a Java program during its terminal launch command.',
+      'Arguments are captured in the String[] args parameter inside the main method declaration.',
+      'Java arrays are zero-indexed: the first launch argument is stored at args[0], the second at args[1], etc.',
+      'Always verify args.length before accessing array elements to prevent ArrayIndexOutOfBoundsException.',
+      'Because all arguments are passed as text Strings, you must parse numbers explicitly with Integer.parseInt() or Double.parseDouble().'
+    ],
+    quiz: [
+      {
+        question: 'Which index is used to access the very first command-line argument in a Java program?',
+        options: [
+          'args[1]',
+          'args[0]',
+          'args[-1]',
+          'args.first()'
+        ],
+        correctAnswerIndex: 1,
+        explanation: 'Java arrays are zero-indexed, meaning that the very first element is stored at index 0 (args[0]).'
+      },
+      {
+        question: 'What exception is thrown if you try to read args[0] when no arguments were passed at launch?',
+        options: [
+          'NullPointerException',
+          'NumberFormatException',
+          'ArrayIndexOutOfBoundsException',
+          'NoSuchElementException'
+        ],
+        correctAnswerIndex: 2,
+        explanation: 'Attempting to access an index that is out of range of the array\'s actual length triggers an ArrayIndexOutOfBoundsException.'
+      },
+      {
+        question: 'How do you convert a command-line argument stored in args[1] into a primitive double value?',
+        options: [
+          'double val = (double) args[1];',
+          'double val = Double.parse(args[1]);',
+          'double val = Double.parseDouble(args[1]);',
+          'double val = args[1].toDouble();'
+        ],
+        correctAnswerIndex: 2,
+        explanation: 'Double.parseDouble() is the official static utility method provided by Java\'s Double wrapper class to convert a String into a double.'
+      },
+      {
+        question: 'What happens if a user passes a text argument like "twenty" to Integer.parseInt()?',
+        options: [
+          'It returns 0.',
+          'It throws a NumberFormatException and crashes the program unless caught.',
+          'It returns the string\'s length (6).',
+          'It automatically rounds it to the nearest integer.'
+        ],
+        correctAnswerIndex: 1,
+        explanation: 'If the input String contains non-numeric characters that cannot be logically parsed, Integer.parseInt() throws a NumberFormatException.'
+      }
+    ]
+  },
+
   'comments': {
     slug: 'comments',
     title: 'Comments',

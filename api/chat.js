@@ -99,6 +99,12 @@ var curriculumInfo = [
         coveredConcepts: ["Scanner class", "System.in", "nextLine()", "nextInt()", "nextDouble()", "Buffer flushing issues"]
       },
       {
+        slug: "command-line-arguments",
+        title: "Command-Line Arguments",
+        description: "Learn how to pass dynamic inputs to the main method at program launch using the args array.",
+        coveredConcepts: ["main method args", "String[] args", "ArrayIndexOutOfBoundsException", "Integer.parseInt()", "Double.parseDouble()", "NumberFormatException"]
+      },
+      {
         slug: "type-casting",
         title: "Type Casting",
         description: "Widening type casting (automatic conversion from smaller to larger data types) and narrowing type casting (explicit manual conversion).",

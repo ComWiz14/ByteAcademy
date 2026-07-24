@@ -86,6 +86,12 @@ export const curriculumInfo: ModuleSummary[] = [
         coveredConcepts: ["Scanner class", "System.in", "nextLine()", "nextInt()", "nextDouble()", "Buffer flushing issues"]
       },
       {
+        slug: "command-line-arguments",
+        title: "Command-Line Arguments",
+        description: "Learn how to pass dynamic inputs to the main method at program launch using the args array.",
+        coveredConcepts: ["main method args", "String[] args", "ArrayIndexOutOfBoundsException", "Integer.parseInt()", "Double.parseDouble()", "NumberFormatException"]
+      },
+      {
         slug: "type-casting",
         title: "Type Casting",
         description: "Widening type casting (automatic conversion from smaller to larger data types) and narrowing type casting (explicit manual conversion).",
@@ -560,6 +566,9 @@ export function getConceptMap(): Record<string, { moduleTitle: string; moduleSlu
   map["primitives"] = { moduleTitle: "Java Fundamentals", moduleSlug: "java-fundamentals", lessonTitle: "Primitive Data Types", lessonSlug: "data-types" };
   map["data types"] = { moduleTitle: "Java Fundamentals", moduleSlug: "java-fundamentals", lessonTitle: "Primitive Data Types", lessonSlug: "data-types" };
   map["type casting"] = { moduleTitle: "Java Fundamentals", moduleSlug: "java-fundamentals", lessonTitle: "Type Casting", lessonSlug: "type-casting" };
+  map["command line"] = { moduleTitle: "Java Fundamentals", moduleSlug: "java-fundamentals", lessonTitle: "Command-Line Arguments", lessonSlug: "command-line-arguments" };
+  map["command line arguments"] = { moduleTitle: "Java Fundamentals", moduleSlug: "java-fundamentals", lessonTitle: "Command-Line Arguments", lessonSlug: "command-line-arguments" };
+  map["args"] = { moduleTitle: "Java Fundamentals", moduleSlug: "java-fundamentals", lessonTitle: "Command-Line Arguments", lessonSlug: "command-line-arguments" };
   map["math"] = { moduleTitle: "Java Fundamentals", moduleSlug: "java-fundamentals", lessonTitle: "Java Math Class", lessonSlug: "java-math-class" };
   map["math class"] = { moduleTitle: "Java Fundamentals", moduleSlug: "java-fundamentals", lessonTitle: "Java Math Class", lessonSlug: "java-math-class" };
   map["inheritance"] = { moduleTitle: "Advanced Object-Oriented Programming", moduleSlug: "advanced-oop", lessonTitle: "Inheritance", lessonSlug: "inheritance" };

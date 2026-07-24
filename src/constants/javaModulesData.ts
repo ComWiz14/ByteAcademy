@@ -123,6 +123,13 @@ export const JAVA_MODULES: ModuleData[] = [
         difficulty: 'Beginner'
       },
       {
+        title: 'Command-Line Arguments',
+        slug: 'command-line-arguments',
+        description: 'Learn how to pass dynamic inputs to the main method at program launch using the args array.',
+        readingTime: '12 mins',
+        difficulty: 'Beginner'
+      },
+      {
         title: 'Comments',
         slug: 'comments',
         description: 'Document your code cleanly using single-line, multi-line, and Javadoc comments.',

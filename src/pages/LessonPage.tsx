@@ -26,7 +26,7 @@ import { JAVA_MODULES } from '../constants/javaModulesData';
 import { TOPIC_DETAILS } from '../constants/javaData';
 import { DETAILED_LESSONS } from '../constants/lessonsData';
 import CodeBlock from '../components/CodeBlock';
-import { DetailedLessonContent, CalloutType, TerminologyItem, VisualDiagramData, MistakeItem } from '../types';
+import { DetailedLessonContent, CalloutType, TerminologyItem, VisualDiagramData, MistakeItem, QuizQuestion } from '../types';
 import TutoringCTA from '../components/TutoringCTA';
 import CodingLabView from '../components/CodingLabView';
 
@@ -367,6 +367,82 @@ function CommonMistakesSection({ mistakes }: { mistakes: MistakeItem[] }) {
           </div>
         </motion.div>
       ))}
+    </div>
+  );
+}
+
+// INTERACTIVE MINI QUIZ COMPONENT
+function MiniQuiz({ quiz }: { quiz: QuizQuestion[]; key?: string }) {
+  const [answers, setAnswers] = useState<Record<number, number>>({});
+
+  return (
+    <div className="flex flex-col gap-5 mt-4">
+      {quiz.map((q, qIdx) => {
+        const selectedIdx = answers[qIdx];
+        const isAnswered = selectedIdx !== undefined;
+
+        return (
+          <div key={qIdx} className="bg-zinc-900/20 border border-zinc-800/80 rounded-2xl p-5 shadow-xs">
+            <div className="flex gap-2.5 items-start mb-4">
+              <span className="w-5 h-5 rounded-full bg-[#FF0800]/10 text-[#FF0800] font-mono text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5 select-none">
+                Q{qIdx + 1}
+              </span>
+              <h4 className="text-xs font-black text-white leading-relaxed">{q.question}</h4>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {q.options.map((opt, optIdx) => {
+                const isSelected = selectedIdx === optIdx;
+                const isCorrect = optIdx === q.correctAnswerIndex;
+                let optStyle = "bg-zinc-950/60 border-zinc-800/80 text-zinc-350 hover:bg-zinc-900/50 hover:border-zinc-700/80";
+
+                if (isAnswered) {
+                  if (isSelected) {
+                    optStyle = isCorrect
+                      ? "bg-emerald-500/10 border-emerald-500 text-emerald-300 font-bold"
+                      : "bg-rose-500/10 border-rose-500 text-rose-300 font-bold";
+                  } else if (isCorrect) {
+                    optStyle = "bg-emerald-500/5 border-emerald-500/30 text-emerald-400/90";
+                  } else {
+                    optStyle = "bg-zinc-950/20 border-zinc-900/60 text-zinc-500 opacity-50 pointer-events-none";
+                  }
+                }
+
+                return (
+                  <button
+                    key={optIdx}
+                    disabled={isAnswered}
+                    onClick={() => setAnswers(prev => ({ ...prev, [qIdx]: optIdx }))}
+                    className={`p-3.5 rounded-xl border text-left text-xs font-semibold leading-snug transition-all cursor-pointer ${optStyle}`}
+                  >
+                    {opt}
+                  </button>
+                );
+              })}
+            </div>
+
+            {isAnswered && (
+              <motion.div
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-4 p-4 rounded-xl bg-zinc-950/50 border border-zinc-800/60 text-xs text-zinc-300 leading-relaxed font-medium"
+              >
+                <div className="flex items-center gap-2 mb-2 font-black uppercase tracking-tight">
+                  {selectedIdx === q.correctAnswerIndex ? (
+                    <span className="text-emerald-400 text-[10px] bg-emerald-500/10 px-2 py-0.5 rounded">✓ Correct Answer</span>
+                  ) : (
+                    <span className="text-rose-400 text-[10px] bg-rose-500/10 px-2 py-0.5 rounded">❌ Incorrect Selection</span>
+                  )}
+                </div>
+                <p className="text-[11px] leading-relaxed text-zinc-400">
+                  <strong className="text-white">Explanation: </strong>
+                  {q.explanation}
+                </p>
+              </motion.div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -1324,7 +1400,21 @@ export default function LessonPage() {
                   </div>
                 </section>
 
-                {/* 11. CONTINUE LEARNING NAVIGATION CONTROLS */}
+                {/* 11. MINI QUIZ SECTION */}
+                {lesson.quiz && lesson.quiz.length > 0 && (
+                  <section id="quiz" className="scroll-mt-20 border-t border-zinc-800/80 pt-6 mt-2">
+                    <h3 className="text-lg font-black text-white uppercase tracking-tight mb-2.5 flex items-center gap-2">
+                      <HelpCircle className="w-4.5 h-4.5 text-[#FF0800]" />
+                      Interactive Lesson Quiz
+                    </h3>
+                    <p className="text-xs text-zinc-400 mb-4 font-semibold">
+                      Test your knowledge of the concepts covered in this lesson. Your selections will reveal immediate explanations.
+                    </p>
+                    <MiniQuiz key={lessonSlug} quiz={lesson.quiz} />
+                  </section>
+                )}
+
+                {/* 12. CONTINUE LEARNING NAVIGATION CONTROLS */}
                 <div className="flex flex-col sm:flex-row items-center justify-between border-t border-zinc-800 pt-6 mt-6 gap-4">
                   {prevPath ? (
                     <Link

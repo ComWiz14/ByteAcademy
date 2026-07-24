@@ -89,6 +89,13 @@ export interface PracticeExerciseData {
   tasks: string[];
 }
 
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctAnswerIndex: number;
+  explanation: string;
+}
+
 export interface DetailedLessonContent {
   slug: string;
   title: string;
@@ -114,6 +121,7 @@ export interface DetailedLessonContent {
   commonMistakes: MistakeItem[];
   practiceExercise: PracticeExerciseData;
   summary: string[];
+  quiz?: QuizQuestion[];
 }
 
 export interface JavaExample {
