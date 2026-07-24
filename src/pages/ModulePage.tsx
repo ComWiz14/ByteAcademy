@@ -42,7 +42,7 @@ export default function ModulePage() {
       const ogDesc = document.querySelector('meta[property="og:description"]');
       if (ogDesc) ogDesc.setAttribute('content', dynamicDesc);
 
-      const bannerUrl = `${window.location.origin}/Banner.png`;
+      const bannerUrl = `${window.location.origin}/image.jpeg`;
 
       const ogImg = document.querySelector('meta[property="og:image"]');
       if (ogImg) ogImg.setAttribute('content', bannerUrl);

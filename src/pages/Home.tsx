@@ -70,7 +70,7 @@ export default function Home() {
   useEffect(() => {
     const title = 'ByteAcademy - Learn Java From Beginner To Confident Programmer';
     const desc = 'Master Java through beginner-friendly lessons, practical examples, interactive tools, and AI-powered learning assistance.';
-    const bannerUrl = `${window.location.origin}/Banner.png`;
+    const bannerUrl = `${window.location.origin}/image.jpeg`;
 
     document.title = title;
 
