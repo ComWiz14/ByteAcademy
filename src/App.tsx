@@ -1,6 +1,7 @@
 import { HashRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -56,6 +57,7 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
+      <Analytics />
       <AIProvider>
         <div className="flex flex-col min-h-screen bg-[#0B0B0F] transition-colors duration-300 relative">
           <Navbar />
