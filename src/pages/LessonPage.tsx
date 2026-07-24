@@ -29,6 +29,7 @@ import CodeBlock from '../components/CodeBlock';
 import { DetailedLessonContent, CalloutType, TerminologyItem, VisualDiagramData, MistakeItem, QuizQuestion } from '../types';
 import TutoringCTA from '../components/TutoringCTA';
 import CodingLabView from '../components/CodingLabView';
+import LessonFeedback from '../components/LessonFeedback';
 
 // REUSABLE CALLOUT COMPONENT
 function CalloutCard({ type, text }: { type: CalloutType; text: string; key?: any }) {
@@ -1018,6 +1019,8 @@ export default function LessonPage() {
                 >
                   <CodingLabView lessonSlug={lessonSlug || ''} />
                   
+                  <LessonFeedback lessonTitle={lesson.title} moduleTitle={activeModule.title} />
+
                   {/* NAVIGATION CONTROLS FOR MINI-PROJECTS */}
                   <div className="flex flex-col sm:flex-row items-center justify-between border-t border-zinc-800 pt-6 mt-6 gap-4">
                     {prevPath ? (
@@ -1413,6 +1416,8 @@ export default function LessonPage() {
                     <MiniQuiz key={lessonSlug} quiz={lesson.quiz} />
                   </section>
                 )}
+
+                <LessonFeedback lessonTitle={lesson.title} moduleTitle={activeModule.title} />
 
                 {/* 12. CONTINUE LEARNING NAVIGATION CONTROLS */}
                 <div className="flex flex-col sm:flex-row items-center justify-between border-t border-zinc-800 pt-6 mt-6 gap-4">
