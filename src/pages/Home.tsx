@@ -85,6 +85,12 @@ export default function Home() {
     const ogImg = document.querySelector('meta[property="og:image"]');
     if (ogImg) ogImg.setAttribute('content', bannerUrl);
 
+    const ogImgUrl = document.querySelector('meta[property="og:image:url"]');
+    if (ogImgUrl) ogImgUrl.setAttribute('content', bannerUrl);
+
+    const ogImgSecure = document.querySelector('meta[property="og:image:secure_url"]');
+    if (ogImgSecure) ogImgSecure.setAttribute('content', bannerUrl);
+
     const twitterTitle = document.querySelector('meta[name="twitter:title"]');
     if (twitterTitle) twitterTitle.setAttribute('content', title);
 
