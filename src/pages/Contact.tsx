@@ -101,8 +101,7 @@ export default function Contact() {
     name: '',
     email: '',
     subject: 'Java Lessons',
-    message: '',
-    honeypot: '' // Anti-spam hidden field
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [lastSubmitTime, setLastSubmitTime] = useState<number>(0);
@@ -132,21 +131,14 @@ export default function Contact() {
       return;
     }
 
-    // 1. Anti-Spam Honeypot Check: silently drop bot submissions
-    if (formData.honeypot.trim() !== '') {
-      setSuccessMsg('Your message has been sent successfully.');
-      setFormData({ name: '', email: '', subject: 'Java Lessons', message: '', honeypot: '' });
-      return;
-    }
-
-    // 2. Submission Rate Limiting (15 second cooldown)
+    // 1. Submission Rate Limiting (15 second cooldown)
     const now = Date.now();
     if (now - lastSubmitTime < 15000) {
       setErrorMsg('Please wait a few seconds before sending another message.');
       return;
     }
 
-    // 3. Validation: Name, Email, and Message length/format
+    // 2. Validation: Name, Email, and Message length/format
     const trimmedName = formData.name.trim();
     const trimmedEmail = formData.email.trim();
     const trimmedMessage = formData.message.trim();
@@ -177,6 +169,55 @@ export default function Contact() {
     setErrorMsg('');
     setLastSubmitTime(now);
 
+    const handleSuccess = () => {
+      recordSuccessfulSubmission();
+      if (checkContactDailyLimit().reached) {
+        setIsLimitReached(true);
+      }
+      setSuccessMsg('Your message has been sent successfully. I will get back to you soon.');
+      setFormData({
+        name: '',
+        email: '',
+        subject: 'Java Lessons',
+        message: ''
+      });
+      setIsSubmitting(false);
+    };
+
+    const handleFinalFailure = () => {
+      setErrorMsg('Unable to send your message right now. Please try again later.');
+      setIsSubmitting(false);
+    };
+
+    const sendFormSubmitFallback = () => {
+      fetch("https://formsubmit.co/ajax/chimangomughogho22@gmail.com", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          "ByteAcademy Contact Request": "New Inquiry Received",
+          name: trimmedName,
+          email: trimmedEmail,
+          subject: formData.subject,
+          message: trimmedMessage
+        })
+      })
+      .then((response) => {
+        if (response.ok) {
+          handleSuccess();
+        } else {
+          console.error("Fallback FormSubmit API responded with error status:", response.status);
+          handleFinalFailure();
+        }
+      })
+      .catch((error) => {
+        console.error("Fallback FormSubmit network error:", error);
+        handleFinalFailure();
+      });
+    };
+
     // Check if EmailJS keys are provided
     if (SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY) {
       // Send via EmailJS REST API
@@ -199,77 +240,22 @@ export default function Contact() {
       })
       .then(async (response) => {
         if (response.ok) {
-          // Record successful submission for daily quota protection
-          recordSuccessfulSubmission();
-          if (checkContactDailyLimit().reached) {
-            setIsLimitReached(true);
-          }
-
-          setSuccessMsg('Your message has been sent successfully. I will get back to you soon.');
-          setFormData({
-            name: '',
-            email: '',
-            subject: 'Java Lessons',
-            message: '',
-            honeypot: ''
-          });
+          handleSuccess();
         } else {
           const text = await response.text();
           console.error("EmailJS API responded with error:", text);
-          setErrorMsg('Something went wrong. Please try again or contact us directly.');
+          // Try fallback
+          sendFormSubmitFallback();
         }
       })
       .catch((err) => {
         console.error("EmailJS network error:", err);
-        setErrorMsg('Something went wrong. Please try again or contact us directly.');
-      })
-      .finally(() => {
-        setIsSubmitting(false);
+        // Try fallback
+        sendFormSubmitFallback();
       });
     } else {
-      // Fallback: If EmailJS environment variables are not configured yet,
-      // use FormSubmit targeting email to ensure out-of-the-box working form!
-      fetch("https://formsubmit.co/ajax/chimangomughogho22@gmail.com", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({
-          "ByteAcademy Contact Request": "New Inquiry Received",
-          name: trimmedName,
-          email: trimmedEmail,
-          subject: formData.subject,
-          message: trimmedMessage
-        })
-      })
-      .then(response => {
-        if (response.ok) {
-          // Record successful submission for daily quota protection
-          recordSuccessfulSubmission();
-          if (checkContactDailyLimit().reached) {
-            setIsLimitReached(true);
-          }
-
-          setSuccessMsg('Your message has been sent successfully. I will get back to you soon.');
-          setFormData({
-            name: '',
-            email: '',
-            subject: 'Java Lessons',
-            message: '',
-            honeypot: ''
-          });
-        } else {
-          setErrorMsg('Something went wrong. Please try again or contact us directly.');
-        }
-      })
-      .catch(error => {
-        console.error("Fallback submission error:", error);
-        setErrorMsg('Something went wrong. Please try again or contact us directly.');
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
+      // Direct fallback
+      sendFormSubmitFallback();
     }
   };
 
@@ -331,17 +317,7 @@ export default function Contact() {
             )}
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-              {/* Anti-spam honeypot field (hidden from human users, targets automated bots) */}
-              <div className="hidden" aria-hidden="true">
-                <input
-                  type="text"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={formData.honeypot}
-                  onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
-                />
-              </div>
+
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
