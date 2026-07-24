@@ -7,12 +7,6 @@ interface LessonFeedbackProps {
   moduleTitle: string;
 }
 
-interface ToastMessage {
-  id: string;
-  type: 'success' | 'error';
-  text: string;
-}
-
 export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedbackProps) {
   const [vote, setVote] = useState<'Yes' | 'No' | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,7 +16,8 @@ export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedb
   const [emailError, setEmailError] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const env = (import.meta as any).env || {};
   const SERVICE_ID = env.VITE_EMAIL_SERVICE_ID || env.VITE_EMAILJS_SERVICE_ID || '';
@@ -37,21 +32,14 @@ export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedb
     { value: 'General suggestion', label: 'General suggestion' }
   ];
 
-  const addToast = (type: 'success' | 'error', text: string) => {
-    const id = Date.now().toString();
-    setToasts((prev) => [...prev, { id, type, text }]);
-  };
-
-  const removeToast = (id: string) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id));
-  };
-
   const handleVote = (selectedVote: 'Yes' | 'No') => {
     setVote(selectedVote);
   };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
+    setSuccessMsg('');
+    setErrorMsg('');
   };
 
   const handleCloseModal = () => {
@@ -61,10 +49,14 @@ export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedb
     setEmail('');
     setEmailError('');
     setIsDropdownOpen(false);
+    setSuccessMsg('');
+    setErrorMsg('');
   };
 
   const handleEmailChange = (val: string) => {
     setEmail(val);
+    setSuccessMsg('');
+    setErrorMsg('');
     if (!val.trim()) {
       setEmailError('');
     } else {
@@ -81,17 +73,20 @@ export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedb
     e.preventDefault();
     if (isSubmitting) return;
 
+    setSuccessMsg('');
+    setErrorMsg('');
+
     const trimmedMsg = message.trim();
     if (!feedbackType) {
-      addToast('error', 'Please select a feedback type.');
+      setErrorMsg('Please select a feedback type.');
       return;
     }
     if (trimmedMsg.length < 10) {
-      addToast('error', 'Message must be at least 10 characters long.');
+      setErrorMsg('Message must be at least 10 characters long.');
       return;
     }
     if (trimmedMsg.length > 1000) {
-      addToast('error', 'Message cannot exceed 1000 characters.');
+      setErrorMsg('Message cannot exceed 1000 characters.');
       return;
     }
 
@@ -100,7 +95,7 @@ export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedb
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(trimmedEmail)) {
         setEmailError('Please enter a valid email address.');
-        addToast('error', 'Please enter a valid email address.');
+        setErrorMsg('Please enter a valid email address.');
         return;
       }
     }
@@ -144,16 +139,19 @@ export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedb
       });
 
       if (response.ok) {
-        addToast('success', 'Thank you! Your feedback helps improve ByteAcademy.');
-        handleCloseModal();
+        setSuccessMsg('Thanks for your feedback! Your suggestions help us improve ByteAcademy.');
+        setFeedbackType('');
+        setMessage('');
+        setEmail('');
+        setEmailError('');
       } else {
         const errorText = await response.text();
         console.error('EmailJS feedback API responded with error status:', response.status, errorText);
-        addToast('error', 'Could not send feedback. Please try again later.');
+        setErrorMsg('Something went wrong. Please try again later.');
       }
     } catch (err) {
       console.error('EmailJS network error:', err);
-      addToast('error', 'Could not send feedback. Please try again later.');
+      setErrorMsg('Something went wrong. Please try again later.');
     } finally {
       setIsSubmitting(false);
     }
@@ -256,6 +254,27 @@ export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedb
               </div>
 
               <form onSubmit={handleSubmitFeedback} className="flex flex-col gap-4">
+                {/* Success Feedback Banner */}
+                {successMsg && (
+                  <div className="p-4 bg-emerald-500/15 border border-emerald-500/20 rounded-xl flex items-start gap-3 text-emerald-400 text-xs font-semibold mb-2 animate-fadeIn">
+                    <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5 text-emerald-400" />
+                    <div>
+                      <span className="font-bold block mb-0.5 text-emerald-300">Feedback Submitted!</span>
+                      {successMsg}
+                    </div>
+                  </div>
+                )}
+
+                {/* Error Feedback Banner */}
+                {errorMsg && (
+                  <div className="p-4 bg-rose-500/15 border border-rose-500/20 rounded-xl flex items-start gap-3 text-rose-400 text-xs font-semibold mb-2 animate-fadeIn">
+                    <AlertCircle className="w-5 h-5 shrink-0 mt-0.5 text-rose-400" />
+                    <div>
+                      <span className="font-bold block mb-0.5 text-rose-300">Error Sending Feedback</span>
+                      {errorMsg}
+                    </div>
+                  </div>
+                )}
                 {/* Read only Module Info */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1">
@@ -312,6 +331,8 @@ export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedb
                               onClick={() => {
                                 setFeedbackType(opt.value);
                                 setIsDropdownOpen(false);
+                                setSuccessMsg('');
+                                setErrorMsg('');
                               }}
                               className={`w-full px-4 py-2 text-xs text-left hover:bg-zinc-800/60 transition-colors ${
                                 feedbackType === opt.value
@@ -367,7 +388,11 @@ export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedb
                     required
                     rows={4}
                     value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                      setSuccessMsg('');
+                      setErrorMsg('');
+                    }}
                     placeholder="Describe what's unclear, list a typo, or suggest a new example..."
                     className="w-full px-4 py-3 text-xs bg-zinc-950 border border-zinc-800 rounded-xl focus:border-[#FF0800] focus:ring-1 focus:ring-[#FF0800] outline-none transition-colors text-white resize-none font-medium leading-relaxed"
                   />
@@ -408,62 +433,6 @@ export default function LessonFeedback({ lessonTitle, moduleTitle }: LessonFeedb
           </div>
         )}
       </AnimatePresence>
-
-      {/* FLOATING TOAST FEEDBACK ALERTS */}
-      <div className="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 max-w-sm w-full pointer-events-none">
-        <AnimatePresence>
-          {toasts.map((toast) => (
-            <motion.div
-              key={toast.id}
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-              className={`p-4 rounded-xl border flex items-start gap-3 shadow-lg pointer-events-auto w-full ${
-                toast.type === 'success'
-                  ? 'bg-zinc-950 border-emerald-500/30 text-emerald-400'
-                  : 'bg-zinc-950 border-rose-500/30 text-rose-400'
-              }`}
-            >
-              <div className="shrink-0 mt-0.5">
-                {toast.type === 'success' ? (
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                ) : (
-                  <AlertCircle className="w-5 h-5 text-rose-400" />
-                )}
-              </div>
-              <div className="flex-grow">
-                <span className={`text-[10px] font-mono font-black uppercase tracking-wider block mb-0.5 ${
-                  toast.type === 'success' ? 'text-emerald-300' : 'text-rose-300'
-                }`}>
-                  {toast.type === 'success' ? 'Success' : 'Error'}
-                </span>
-                <p className="text-xs text-zinc-300 font-semibold leading-relaxed">
-                  {toast.text}
-                </p>
-              </div>
-              <button
-                onClick={() => removeToast(toast.id)}
-                className="shrink-0 text-zinc-500 hover:text-white transition-colors cursor-pointer"
-                aria-label="Dismiss toast"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-              {/* Auto close progress indicator or timer logic */}
-              <ToastTimer duration={4000} onComplete={() => removeToast(toast.id)} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
     </>
   );
-}
-
-// Simple internal helper component to handle auto-dismiss countdown timer safely
-function ToastTimer({ duration, onComplete }: { duration: number; onComplete: () => void }) {
-  useEffect(() => {
-    const timer = setTimeout(onComplete, duration);
-    return () => clearTimeout(timer);
-  }, [duration, onComplete]);
-
-  return null;
 }
