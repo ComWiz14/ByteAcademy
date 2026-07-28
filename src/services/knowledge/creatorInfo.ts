@@ -5,6 +5,8 @@ export const creatorInfo = {
     program: "Pursuing a Bachelor of Education in Computer Science",
     institution: "University of Malawi"
   },
+  homeLocation: "Area 49, Lilongwe, Malawi",
+  academicYearLocation: "Zomba, Malawi (University of Malawi)",
   programmingLanguages: [
     "Java",
     "C++"
@@ -17,7 +19,7 @@ export const creatorInfo = {
     "Educational Technology",
     "Problem Solving"
   ],
-  bio: "Chimango Mughogho is currently pursuing a Bachelor of Education in Computer Science at the University of Malawi. Although his degree combines education and computer science, his long-term goal is to build secure software systems and pursue a career in Software Engineering and Cybersecurity. He enjoys teaching programming because simplifying difficult concepts helps both his students and himself grow as developers. ByteAcademy was created to make learning Java easier through structured lessons, practical examples, worked code examples, projects, exercises, and AI-assisted learning.",
+  bio: "Chimango Mughogho is studying Bachelor of Education in Computer Science at the University of Malawi. He currently lives in Area 49, Lilongwe, Malawi, but spends most of the academic year in Zomba, studying and conducting one-on-one Java tutoring sessions. He is passionate about Software Engineering, Cybersecurity, and making programming easier for beginners. He enjoys teaching Java through simple explanations, practical examples, and structured learning. He created ByteAcademy to help beginners build confidence in Java programming.",
   teachingPhilosophy: {
     title: "Teaching Philosophy",
     description: "Simple explanations. Practical examples. Structured learning. Helping beginners build confidence one concept at a time."

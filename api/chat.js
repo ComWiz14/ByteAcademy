@@ -595,7 +595,7 @@ var pageInfo = {
       "Official Form: Submits inquiries directly to the creator's inbox using EmailJS integration or automated FormSubmit routing.",
       "Official Email: direct channel via chimangomughogho22@gmail.com",
       "Official Phone & WhatsApp Hotline: Direct communication link with the tutor.",
-      "Physical Address: Chikwawa Road, Blantyre, Malawi."
+      "Physical Address: Area 49, Lilongwe, Malawi (Academic year: University of Malawi, Zomba, Malawi)."
     ],
     workingHours: "Monday through Saturday (8:00 AM to 6:00 PM Central African Time - CAT)."
   }
@@ -606,18 +606,20 @@ var creatorInfo = {
   name: "Chimango Mughogho",
   role: "Creator of ByteAcademy",
   education: {
-    program: "Currently studying Bachelor of Education in Computer Science",
+    program: "Bachelor of Education in Computer Science",
     institution: "University of Malawi",
     campus: "Chancellor College",
     location: "Zomba"
   },
-  currentResidence: "Lilongwe",
+  homeLocation: "Area 49, Lilongwe, Malawi",
+  academicYearLocation: "Zomba, Malawi (University of Malawi)",
+  currentResidence: "Area 49, Lilongwe, Malawi (Zomba during academic year)",
   interests: [
-    "Software development",
-    "Building useful technology",
-    "Exploring cybersecurity"
+    "Software Engineering",
+    "Cybersecurity",
+    "Beginner programming education"
   ],
-  bio: "Chimango Mughogho is the creator of ByteAcademy. He combines educational pedagogical theory with technical computer science training. He is highly passionate about software development, secure application designs, and exploring cybersecurity. He created ByteAcademy to provide a structured, beginner-friendly platform that turns complex computer science concepts into simple, visual, and logical milestones.",
+  bio: "ByteAcademy was created by Chimango Mughogho. He lives in Area 49, Lilongwe, Malawi. During the academic year, he spends most of his time in Zomba, where he studies Bachelor of Education in Computer Science at the University of Malawi and also conducts one-on-one Java tutoring sessions. He is passionate about Software Engineering, Cybersecurity, and making programming easier for beginners.",
   personalMessage: "Programming is not about memorizing code. It is about understanding how things work, solving problems, and improving through practice."
 };
 
@@ -655,7 +657,7 @@ var featureInfo = {
   },
   tutoringMentorship: {
     name: "Premium Monthly Mentorship Program",
-    description: "A highly personalized 1-on-1 coaching program designed to accelerate learning, assist in school assignments, and prepare for academic or professional programming exams. Offers face-to-face sessions in Blantyre, Malawi, or Zoom/Google Meet sessions worldwide, plus direct WhatsApp tutor hotline."
+    description: "A highly personalized 1-on-1 coaching program designed to accelerate learning, assist in school assignments, and prepare for academic or professional programming exams. Offers face-to-face sessions in Zomba, Malawi (at the University of Malawi), or Zoom/Google Meet sessions worldwide, plus direct WhatsApp tutor hotline."
   },
   learningResources: {
     name: "Curated Setup Downloads & Syntax Sheets",
@@ -718,7 +720,7 @@ var KNOWLEDGE_BASE = {
   mentorship: {
     title: featureInfo.tutoringMentorship.name,
     description: featureInfo.tutoringMentorship.description,
-    delivery: "Available as either face-to-face sessions in Blantyre, Malawi, or interactive online sessions worldwide.",
+    delivery: "Available as either face-to-face sessions in Zomba, Malawi (at the University of Malawi), or interactive online sessions worldwide.",
     features: [
       "Personalized 1-on-1 Tutoring with tutor Chimango Mughogho.",
       "Assignment Support: In-depth guidance explaining concepts rather than just providing copy-paste solutions.",

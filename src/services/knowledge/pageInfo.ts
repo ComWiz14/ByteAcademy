@@ -92,7 +92,7 @@ export const pageInfo = {
       "Official Form: Submits inquiries directly to the creator's inbox.",
       "Official Email: direct channel via chimangomughogho22@gmail.com",
       "Official Phone & WhatsApp Hotline: Direct communication link with the tutor.",
-      "Physical Address: Chikwawa Road, Blantyre, Malawi."
+      "Physical Address: Area 49, Lilongwe, Malawi (Academic year: University of Malawi, Zomba, Malawi)."
     ],
     workingHours: "Monday through Saturday (8:00 AM to 6:00 PM Central African Time - CAT)."
   }

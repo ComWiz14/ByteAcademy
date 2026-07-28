@@ -31,7 +31,7 @@ export const featureInfo = {
   },
   tutoringMentorship: {
     name: "Premium Monthly Mentorship Program",
-    description: "A highly personalized 1-on-1 coaching program designed to accelerate learning, assist in school assignments, and prepare for academic or professional programming exams. Offers face-to-face sessions in Blantyre, Malawi, or Zoom/Google Meet sessions worldwide, plus direct WhatsApp tutor hotline."
+    description: "A highly personalized 1-on-1 coaching program designed to accelerate learning, assist in school assignments, and prepare for academic or professional programming exams. Offers face-to-face sessions in Zomba, Malawi (at the University of Malawi), or Zoom/Google Meet sessions worldwide, plus direct WhatsApp tutor hotline."
   },
   learningResources: {
     name: "Curated Setup Downloads & Syntax Sheets",

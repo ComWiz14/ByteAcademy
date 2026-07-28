@@ -183,16 +183,16 @@ if (problemExists) {
                 </h4>
                 <div className="space-y-4 text-sm text-zinc-400 leading-relaxed">
                   <p>
-                    I am currently pursuing a <span className="text-white font-semibold">Bachelor of Education in Computer Science at the University of Malawi</span>.
+                    I am currently pursuing a <span className="text-white font-semibold">Bachelor of Education in Computer Science at the University of Malawi</span>. I am highly passionate about Software Engineering, Cybersecurity, and making programming easier for beginners.
                   </p>
                   <p>
-                    Although my degree combines education and computer science, my long-term goal is to build secure software systems and pursue a career in <span className="text-white font-semibold">Software Engineering and Cybersecurity</span>.
+                    I currently live in <span className="text-white font-semibold">Area 49, Lilongwe, Malawi</span>. During the academic year, I spend most of my time at the University of Malawi in <span className="text-white font-semibold">Zomba</span>, where I study and also conduct one-on-one Java tutoring sessions.
                   </p>
                   <p>
-                    I enjoy teaching programming because simplifying difficult concepts helps both my students and myself grow as developers.
+                    I enjoy teaching Java through simple explanations, practical examples, and structured learning, as simplifying complex concepts helps both my students and myself grow as developers.
                   </p>
                   <p>
-                    <span className="text-[#FF0800] font-semibold">ByteAcademy</span> was created to make learning Java easier through structured lessons, practical examples, worked code examples, projects, exercises, and AI-assisted learning.
+                    I created <span className="text-[#FF0800] font-semibold">ByteAcademy</span> to help beginners build confidence in Java programming through highly visual, beginner-friendly, and structured pathways.
                   </p>
                 </div>
               </motion.div>

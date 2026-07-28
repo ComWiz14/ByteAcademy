@@ -40,7 +40,7 @@ export const KNOWLEDGE_BASE = {
   mentorship: {
     title: featureInfo.tutoringMentorship.name,
     description: featureInfo.tutoringMentorship.description,
-    delivery: "Available as either face-to-face sessions in Blantyre, Malawi, or interactive online sessions worldwide.",
+    delivery: "Available as either face-to-face sessions in Zomba, Malawi (at the University of Malawi), or interactive online sessions worldwide.",
     features: [
       "Personalized 1-on-1 Tutoring with tutor Chimango Mughogho.",
       "Assignment Support: In-depth guidance explaining concepts rather than just providing copy-paste solutions.",

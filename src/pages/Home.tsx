@@ -788,7 +788,7 @@ public class LoopDemonstration {
                   Hi, I'm Chimango 👋
                 </h3>
                 <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-medium">
-                  I'm a Computer Science student at the University of Malawi and the creator of ByteAcademy. I enjoy building software, teaching programming, and exploring cybersecurity. I created ByteAcademy to help beginners learn Java through simple explanations, practical examples, and structured learning.
+                  I am studying for a Bachelor of Education in Computer Science at the University of Malawi and I'm the creator of ByteAcademy. I am passionate about Software Engineering, Cybersecurity, and making programming easier for beginners. I created ByteAcademy to help beginners build confidence in Java through simple, structured learning.
                 </p>
                 <div className="mt-3 sm:mt-4 flex justify-end">
                   <Link
